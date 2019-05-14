@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>codevember </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v2.1.0/dist/aframe-physics-system.min.js"></script>
+    <script src="//cdn.rawgit.com/HAZARDU5/aframe-orbit-controls-component/d6f809f8/dist/aframe-orbit-controls-component.js"></script>
+    <script src="https://cdn.rawgit.com/feiss/aframe-environment-component/ad57b15d/dist/aframe-environment-component.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>      
+        <a-asset-item id="kitchen-obj" src="https://cdn.glitch.com/62dae12a-907c-475f-a8fc-eeb7f19bff45%2Fkitchen-model.obj?1510215228396"></a-asset-item>
+        <a-asset-item id="kitchen-mtl" src="https://cdn.glitch.com/62dae12a-907c-475f-a8fc-eeb7f19bff45%2Fkitchen-materials.mtl?1510215227874"></a-asset-item>      
+        <a-asset-item id="icebox-obj" src="https://cdn.glitch.com/62dae12a-907c-475f-a8fc-eeb7f19bff45%2Ficebox-model-triangulated.obj?1510213903450"></a-asset-item>
+        <a-asset-item id="icebox-mtl" src="https://cdn.glitch.com/62dae12a-907c-475f-a8fc-eeb7f19bff45%2Ficebox-materials.mtl?1510213903391"></a-asset-item>      
+        <a-asset-item id="door-obj" src="https://cdn.glitch.com/62dae12a-907c-475f-a8fc-eeb7f19bff45%2Ficebox-door-model-triangulated.obj?1510213939958"></a-asset-item>
+        <a-asset-item id="door-mtl" src="https://cdn.glitch.com/62dae12a-907c-475f-a8fc-eeb7f19bff45%2Ficebox-door-materials.mtl?1510213939898"></a-asset-item>      
+      </a-assets>
+      <a-entity id="camera" camera position="0 0 2" orbit-controls="
+                  target: #fridge;
+                  enableDamping: true;
+                  dampingFactor: 0.125;
+                  rotateSpeed:0.25;
+                  rotateToSpeed: 0.04;
+                  rotateTo: -0.1 0.340 0.4;
+                  logPosition: true;
+                  ">
+              </a-entity>
+      <a-entity id="env1" environment="preset:starry; shadow:true; groundColor2: #757575; groundColor: #ffffff; groundTexture: checkerboard; grid: none;"></a-entity>
+      <a-sky color="black"></a-sky>
+      <a-entity id="spotlight-1" position="-4.958 4.814 -0.297" rotation="-32.4 -20.35 0" light="castShadow:true;penumbra:0.97;shadowMapWidth:1024;shadowMapHeight:1024;type:spot"></a-entity>
+      <a-entity id="spotlight-2" position="-0.034 4.671 4.549" rotation="-32.4 -36.55 0" light="penumbra:0.97;shadowMapWidth:1024;shadowMapHeight:1024;castShadow:true;type:spot"></a-entity>
+      <a-entity id="fridge" position="2.568 -0.5 -3.183" rotation="0 -40 0">
+        <a-box id="hinge-target" position="-0.25 1 0.0" color="#777" static-body scale="1 1 1" material="wireframe: true; visible: false;">
+          <a-entity id="icebox" obj-model="obj: #icebox-obj; mtl: #icebox-mtl" position="-0.013 0.552 0.061" scale="3 3 3" rotation="0 -90 0" shadow="cast:true;receive:true"></a-entity>
+        </a-box>
+        <a-box depth="0.1"
+               color="#F00"
+               position="0.0 1 0.5"
+               rotation="0 -90 0"
+               scale="1 1 1"
+               dynamic-body
+               constraint="type: hinge;
+                           target: #hinge-target;
+                           axis: 0 1 0;
+                           targetAxis: 0 1 0;
+                           pivot: -0.5 0 0;
+                           targetPivot: -0.5 0 0.5;"
+               material="wireframe: true; visible: false;">
+          <a-entity id="door" obj-model="obj: #door-obj; mtl: #door-mtl" position="0.5 0.84 0.06" rotation="0 38.6 0" scale="3 3 3" shadow="cast:true;receive:true"></a-entity>
+        </a-box>
+        <a-box position="-1.446 1 0" scale="1 1 1" color="#777" static-body material="wireframe: true; visible: false;"></a-box>  
+      </a-entity>            
+      <a-entity id="kitchen" obj-model="obj: #kitchen-obj; mtl: #kitchen-mtl" position="-1.213 1.5 -3.958" scale="1.5 1.5 1.5" rotation="0 -39.8 0" shadow="cast:true;receive:true"></a-entity>
+    </a-scene>
+  </body>
+</html>
